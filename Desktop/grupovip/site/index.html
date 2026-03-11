@@ -404,8 +404,8 @@ body::before{
   display:flex;align-items:center;gap:8px;
   padding:8px 18px;border-radius:30px;font-size:12px;font-weight:600;
 }
-.verified-badge.of{background:rgba(0,175,240,.15);border:1px solid rgba(0,175,240,.3);color:#00AFF0}
-.verified-badge.priv{background:rgba(255,255,255,.05);border:1px solid var(--orange);color:var(--orange)}
+.verified-badge.of{background:rgba(0,175,240,.2);border:1px solid #00AFF0;color:#00AFF0;box-shadow:0 0 15px rgba(0,175,240,.3)}
+.verified-badge.priv{background:rgba(255,107,0,.15);border:1px solid #FF6B00;color:#FF6B00;box-shadow:0 0 15px rgba(255,107,0,.3)}
 .verified-check{
   width:16px;height:16px;background:currentColor;border-radius:50%;
   display:flex;align-items:center;justify-content:center;color:var(--black);font-size:9px;
@@ -642,7 +642,7 @@ footer span{color:var(--pink)}
     <div class="payment-row reveal">
       <div class="payment-row-title">Formas de pagamento aceitas</div>
       <div class="payment-logos">
-        <img src="cards.png" alt="Cartões aceitos" style="height:44px;filter:none;opacity:1;max-width:100%"
+        <img src="https://i.ibb.co/5xJ8wZCX/image-18.jpg" alt="Cartões aceitos" style="height:auto;max-height:120px;filter:none;opacity:1;max-width:100%;border-radius:8px"
              onerror="this.style.display='none';document.getElementById('cards-text').style.display='flex'"/>
         <div id="cards-text" style="display:none;gap:10px;flex-wrap:wrap;justify-content:center;font-size:12px;color:var(--gray2)">
           <span style="background:#1A1FFF;padding:4px 12px;border-radius:4px;color:white;font-weight:700">VISA</span>
@@ -661,7 +661,7 @@ footer span{color:var(--pink)}
         Verificada no OnlyFans
       </div>
       <div class="verified-badge priv">
-        <div class="verified-check" style="background:var(--orange)">✓</div>
+        <div class="verified-check" style="background:#FF6B00">✓</div>
         Verificada no Privacy
       </div>
     </div>
