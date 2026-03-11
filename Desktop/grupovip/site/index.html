@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Ingrid VIP — Acesso Confirmado 🖤</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --pink:#FF1B8D;
+  --pink2:#ff5cb8;
+  --pink3:#ff0066;
+  --black:#070709;
+  --black2:#0f0f12;
+  --black3:#18181d;
+  --black4:#1e1e25;
+  --gray:#9999aa;
+  --gray2:#ccccdd;
+  --white:#ffffff;
+  --gold:#ffd700;
+  --green:#00e676;
+  --blue:#2AABEE;
+  --orange:#FF6B00;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+/* CURSOR */
+*{cursor:none}
+#cursor{position:fixed;width:12px;height:12px;background:var(--pink);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .1s,opacity .2s;mix-blend-mode:difference}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--pink);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .12s ease;opacity:.5}
+body:hover #cursor{opacity:1}
+
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* NOISE OVERLAY */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9998;opacity:.4;
+}
+
+/* PARTICLES CANVAS */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+
+/* INTRO OVERLAY */
+#intro{
+  position:fixed;inset:0;z-index:9000;
+  background:var(--black);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity .8s ease,visibility .8s ease;
+}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+#intro-lock{font-size:64px;animation:pulse-icon 1s ease infinite}
+#intro-text{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,36px);color:var(--white);text-align:center;letter-spacing:2px}
+#intro-sub{color:var(--gray);font-size:14px;letter-spacing:3px;text-transform:uppercase}
+#intro-bar-wrap{width:260px;height:3px;background:var(--black3);border-radius:2px;overflow:hidden;margin-top:8px}
+#intro-bar{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--pink2));border-radius:2px;transition:width 2.2s cubic-bezier(.4,0,.2,1)}
+@keyframes pulse-icon{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+
+/* MAIN CONTENT */
+#main{position:relative;z-index:1}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+  padding:40px 20px;
+}
+.hero-bg-glow{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%,rgba(255,27,141,.18) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 30% at 80% 80%,rgba(255,27,141,.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  max-width:960px;
+  width:100%;
+  align-items:center;
+}
+@media(max-width:700px){
+  .hero-grid{grid-template-columns:1fr;gap:32px;text-align:center}
+  .hero-photo-wrap{order:-1}
+}
+
+/* photo */
+.hero-photo-wrap{
+  position:relative;
+  display:flex;justify-content:center;
+}
+.hero-photo-outer{
+  position:relative;
+  width:clamp(240px,40vw,320px);
+  aspect-ratio:1;
+}
+.hero-photo-ring{
+  position:absolute;inset:-12px;
+  border:1.5px solid var(--pink);
+  border-radius:50%;
+  animation:spin-ring 12s linear infinite;
+  opacity:.5;
+}
+.hero-photo-ring::before{
+  content:'';
+  position:absolute;top:-4px;left:50%;transform:translateX(-50%);
+  width:8px;height:8px;background:var(--pink);border-radius:50%;
+  box-shadow:0 0 12px var(--pink);
+}
+@keyframes spin-ring{to{transform:rotate(360deg)}}
+.hero-photo-ring2{
+  position:absolute;inset:-24px;
+  border:1px dashed rgba(255,27,141,.25);
+  border-radius:50%;
+  animation:spin-ring 20s linear infinite reverse;
+}
+.hero-photo-glow{
+  position:absolute;inset:-30px;
+  background:radial-gradient(circle,rgba(255,27,141,.25) 0%,transparent 70%);
+  border-radius:50%;
+  animation:glow-pulse 3s ease infinite;
+}
+@keyframes glow-pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.hero-photo{
+  width:100%;aspect-ratio:1;
+  border-radius:50%;
+  object-fit:cover;object-position:top;
+  border:3px solid var(--pink);
+  box-shadow:0 0 40px rgba(255,27,141,.4),0 0 80px rgba(255,27,141,.15);
+  position:relative;z-index:1;
+}
+.hero-online{
+  position:absolute;bottom:12px;right:12px;z-index:2;
+  display:flex;align-items:center;gap:6px;
+  background:rgba(0,0,0,.8);
+  border:1px solid rgba(255,27,141,.3);
+  border-radius:20px;padding:5px 12px;
+  font-size:11px;color:var(--gray2);
+  backdrop-filter:blur(10px);
+}
+.hero-online-dot{
+  width:7px;height:7px;background:var(--green);border-radius:50%;
+  box-shadow:0 0 8px var(--green);
+  animation:blink 1.5s ease infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* hero text */
+.hero-text{}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,27,141,.1);
+  border:1px solid rgba(255,27,141,.3);
+  border-radius:30px;padding:6px 16px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--pink);
+  margin-bottom:20px;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--pink);border-radius:50%;animation:blink 1s infinite}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,6vw,58px);
+  line-height:1.1;
+  margin-bottom:16px;
+}
+.hero-title span{
+  color:var(--pink);
+  font-style:italic;
+  display:block;
+}
+.hero-sub{color:var(--gray);font-size:15px;line-height:1.7;margin-bottom:28px;font-weight:300}
+
+/* typing */
+.typing-wrap{
+  display:flex;align-items:center;gap:10px;
+  background:var(--black3);
+  border:1px solid rgba(255,27,141,.15);
+  border-radius:14px;padding:12px 16px;
+  margin-bottom:24px;font-size:13px;
+}
+.typing-avatar{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--pink);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;flex-shrink:0;
+  box-shadow:0 0 10px rgba(255,27,141,.4);
+}
+.typing-text{color:var(--gray2)}
+.typing-text b{color:var(--pink)}
+#typed-msg{color:var(--white)}
+.typing-cursor{display:inline-block;width:2px;height:13px;background:var(--pink);margin-left:2px;animation:blink .7s step-end infinite;vertical-align:middle}
+
+/* CTA button */
+.btn-cta{
+  display:inline-flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,var(--pink),var(--pink3));
+  color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;
+  font-size:15px;border:none;
+  border-radius:50px;padding:16px 32px;
+  text-decoration:none;cursor:none;
+  box-shadow:0 0 30px rgba(255,27,141,.5),0 4px 20px rgba(0,0,0,.4);
+  animation:cta-pulse 2.5s ease infinite;
+  transition:transform .2s,box-shadow .2s;
+  position:relative;overflow:hidden;
+}
+.btn-cta::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  border-radius:50px;
+}
+.btn-cta:hover{transform:scale(1.05);box-shadow:0 0 50px rgba(255,27,141,.7),0 8px 30px rgba(0,0,0,.5)}
+@keyframes cta-pulse{0%,100%{box-shadow:0 0 30px rgba(255,27,141,.5),0 4px 20px rgba(0,0,0,.4)}50%{box-shadow:0 0 50px rgba(255,27,141,.8),0 4px 20px rgba(0,0,0,.4)}}
+
+/* member count */
+.hero-members{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:var(--gray);margin-top:14px;
+}
+.hero-members-avatars{display:flex}
+.hero-members-avatars span{
+  width:22px;height:22px;border-radius:50%;
+  background:linear-gradient(135deg,var(--pink),var(--black3));
+  border:2px solid var(--black);
+  margin-left:-6px;display:block;
+}
+.hero-members-avatars span:first-child{margin-left:0}
+.hero-members b{color:var(--white)}
+
+/* ── COUNTDOWN ── */
+.countdown-section{
+  padding:20px;
+  display:flex;justify-content:center;
+  position:relative;z-index:1;
+}
+.countdown-card{
+  background:linear-gradient(135deg,rgba(255,27,141,.08),rgba(255,0,102,.04));
+  border:1px solid rgba(255,27,141,.2);
+  border-radius:16px;padding:20px 32px;
+  display:flex;align-items:center;gap:20px;
+  max-width:680px;width:100%;
+  flex-wrap:wrap;justify-content:center;gap:16px;
+}
+.countdown-label{
+  font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--pink);
+  font-weight:600;white-space:nowrap;
+}
+.countdown-timer{display:flex;gap:12px;align-items:center}
+.cd-unit{text-align:center}
+.cd-num{
+  font-family:'Playfair Display',serif;font-size:32px;font-weight:700;
+  color:var(--white);line-height:1;display:block;
+  text-shadow:0 0 20px rgba(255,27,141,.6);
+}
+.cd-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--gray);margin-top:2px}
+.cd-sep{font-family:'Playfair Display',serif;font-size:28px;color:var(--pink);line-height:1;margin-bottom:10px}
+
+/* ── BENEFITS ── */
+.section{
+  max-width:800px;margin:0 auto;
+  padding:60px 20px;
+  position:relative;z-index:1;
+}
+.section-header{text-align:center;margin-bottom:48px}
+.section-tag{
+  display:inline-block;
+  background:rgba(255,27,141,.1);border:1px solid rgba(255,27,141,.25);
+  border-radius:20px;padding:4px 16px;
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--pink);
+  margin-bottom:14px;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,5vw,42px);
+  line-height:1.15;
+}
+.section-title em{color:var(--pink);font-style:italic}
+
+.benefits-grid{display:grid;gap:14px}
+.benefit-card{
+  display:flex;align-items:center;gap:18px;
+  background:var(--black2);
+  border:1px solid rgba(255,27,141,.1);
+  border-left:3px solid var(--pink);
+  border-radius:14px;padding:20px 22px;
+  transform:translateX(-30px);opacity:0;
+  transition:transform .5s ease,opacity .5s ease,border-color .3s,box-shadow .3s;
+}
+.benefit-card.visible{transform:translateX(0);opacity:1}
+.benefit-card:hover{
+  border-color:rgba(255,27,141,.5);
+  box-shadow:0 0 30px rgba(255,27,141,.08),inset 0 0 30px rgba(255,27,141,.03);
+}
+.benefit-icon-wrap{
+  width:52px;height:52px;flex-shrink:0;
+  background:rgba(255,27,141,.1);
+  border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:24px;border:1px solid rgba(255,27,141,.2);
+}
+.benefit-body{}
+.benefit-title{font-size:15px;font-weight:600;color:var(--white);margin-bottom:4px}
+.benefit-desc{font-size:13px;color:var(--gray);line-height:1.5;font-weight:300}
+
+/* ── TELEGRAM CTA ── */
+.tg-section{
+  padding:40px 20px 60px;
+  display:flex;justify-content:center;
+  position:relative;z-index:1;
+}
+.tg-card{
+  background:linear-gradient(135deg,var(--black2),var(--black3));
+  border:1px solid rgba(255,27,141,.25);
+  border-radius:24px;padding:48px 40px;
+  max-width:620px;width:100%;text-align:center;
+  position:relative;overflow:hidden;
+}
+.tg-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(255,27,141,.12),transparent 70%);
+  pointer-events:none;
+}
+.tg-icon{font-size:52px;margin-bottom:16px;display:block}
+.tg-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(24px,4vw,34px);margin-bottom:12px;
+}
+.tg-title span{color:var(--pink);font-style:italic}
+.tg-sub{color:var(--gray);font-size:14px;line-height:1.7;margin-bottom:32px}
+.btn-tg{
+  display:inline-flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,var(--pink),var(--pink3));
+  color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;
+  font-size:16px;border:none;border-radius:50px;
+  padding:18px 40px;text-decoration:none;cursor:none;
+  box-shadow:0 0 40px rgba(255,27,141,.5);
+  animation:cta-pulse 2s ease infinite;
+  transition:transform .2s;
+  position:relative;overflow:hidden;
+}
+.btn-tg:hover{transform:scale(1.04)}
+.btn-tg-sub{
+  margin-top:16px;font-size:12px;color:var(--gray);
+  display:flex;align-items:center;gap:6px;justify-content:center;
+}
+.btn-tg-sub svg{opacity:.5}
+
+/* confetti canvas */
+#confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:9000}
+
+/* ── SECURITY ── */
+.security-section{
+  padding:40px 20px 60px;
+  position:relative;z-index:1;
+}
+.security-inner{max-width:800px;margin:0 auto}
+.security-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;
+  margin-top:32px;
+}
+.security-card{
+  background:var(--black2);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:14px;padding:22px 16px;text-align:center;
+  transition:border-color .3s,transform .3s;
+}
+.security-card:hover{border-color:rgba(255,27,141,.3);transform:translateY(-4px)}
+.security-card-icon{font-size:28px;margin-bottom:10px}
+.security-card-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:4px}
+.security-card-desc{font-size:11px;color:var(--gray);line-height:1.5}
+
+/* payment row */
+.payment-row{
+  margin-top:32px;
+  background:var(--black2);border:1px solid rgba(255,255,255,.05);
+  border-radius:16px;padding:24px;text-align:center;
+}
+.payment-row-title{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:16px}
+.payment-logos{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;
+}
+.payment-logos img{height:28px;filter:grayscale(1) brightness(1.5);opacity:.7;transition:filter .3s,opacity .3s}
+.payment-logos img:hover{filter:none;opacity:1}
+
+/* verified badges */
+.verified-row{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px;
+}
+.verified-badge{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 18px;border-radius:30px;font-size:12px;font-weight:600;
+}
+.verified-badge.of{background:rgba(0,175,240,.15);border:1px solid rgba(0,175,240,.3);color:#00AFF0}
+.verified-badge.priv{background:rgba(255,255,255,.05);border:1px solid var(--orange);color:var(--orange)}
+.verified-check{
+  width:16px;height:16px;background:currentColor;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--black);font-size:9px;
+}
+
+/* ── SIGILO ── */
+.sigilo-section{
+  padding:40px 20px 80px;
+  position:relative;z-index:1;
+}
+.sigilo-inner{max-width:800px;margin:0 auto}
+.sigilo-promise{
+  background:linear-gradient(135deg,rgba(255,215,0,.05),rgba(255,27,141,.05));
+  border:1px solid rgba(255,215,0,.2);
+  border-radius:20px;padding:32px;text-align:center;
+  margin-bottom:28px;
+}
+.sigilo-promise-icon{font-size:44px;margin-bottom:12px}
+.sigilo-promise-title{
+  font-family:'Playfair Display',serif;
+  font-size:22px;color:var(--gold);margin-bottom:10px;
+}
+.sigilo-promise-text{font-size:14px;color:var(--gray2);line-height:1.7;font-weight:300}
+.sigilo-promise-sign{font-family:'Playfair Display',serif;font-style:italic;color:var(--pink);font-size:16px;margin-top:12px}
+
+.sigilo-grid{display:grid;gap:12px}
+.sigilo-card{
+  display:flex;align-items:center;gap:16px;
+  background:var(--black2);border:1px solid rgba(255,255,255,.05);
+  border-radius:14px;padding:18px 20px;
+  transition:border-color .3s;
+}
+.sigilo-card:hover{border-color:rgba(255,27,141,.2)}
+.sigilo-icon{font-size:22px;flex-shrink:0}
+.sigilo-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px}
+.sigilo-desc{font-size:12px;color:var(--gray);line-height:1.5}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid rgba(255,255,255,.05);
+  padding:30px 20px;text-align:center;
+  font-size:11px;color:var(--gray);letter-spacing:1px;
+  position:relative;z-index:1;
+}
+footer span{color:var(--pink)}
+
+/* scroll reveal base */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* MOBILE */
+@media(max-width:480px){
+  .btn-cta,.btn-tg{padding:14px 24px;font-size:14px}
+  .tg-card{padding:32px 20px}
+  .countdown-card{padding:16px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Particles -->
+<canvas id="particles"></canvas>
+
+<!-- Confetti -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- INTRO SPLASH -->
+<div id="intro">
+  <div id="intro-lock">🔐</div>
+  <div id="intro-text">Verificando seu acesso VIP...</div>
+  <div id="intro-sub">Ingrid · Área Exclusiva +18</div>
+  <div id="intro-bar-wrap"><div id="intro-bar"></div></div>
+</div>
+
+<!-- MAIN -->
+<div id="main" style="opacity:0;transition:opacity .6s ease">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-glow"></div>
+  <div class="hero-grid">
+
+    <!-- Photo -->
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-outer">
+        <div class="hero-photo-glow"></div>
+        <div class="hero-photo-ring2"></div>
+        <div class="hero-photo-ring"></div>
+        <img class="hero-photo" src="model.jpg" alt="Ingrid VIP" onerror="this.style.background='linear-gradient(135deg,#1a001a,#0a0a0a)';this.removeAttribute('src')"/>
+        <div class="hero-online">
+          <span class="hero-online-dot"></span>
+          <span>online agora</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="hero-text">
+      <div class="hero-badge"><span class="hero-badge-dot"></span> Acesso VIP Confirmado</div>
+      <h1 class="hero-title">
+        Bem-vindo ao meu
+        <span>mundo secreto 🖤</span>
+      </h1>
+      <p class="hero-sub">Pagamento confirmado, bb. Agora você tem acesso a uma versão de mim que pouquíssimos conhecem. Sem filtro. Sem censura.</p>
+
+      <div class="typing-wrap">
+        <div class="typing-avatar">💋</div>
+        <div class="typing-text">
+          <b>Ingrid</b> está escrevendo...<br>
+          <span id="typed-msg"></span><span class="typing-cursor"></span>
+        </div>
+      </div>
+
+      <a href="https://t.me/+KUVr6Oj5OqpiNTQx" target="_blank" class="btn-cta" id="main-cta" onclick="fireConfetti()">
+        <span>🔥</span> Acessar Grupo VIP Agora
+      </a>
+
+      <div class="hero-members">
+        <div class="hero-members-avatars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span><b id="member-count">247</b> membros ativos agora</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<div class="countdown-section">
+  <div class="countdown-card reveal">
+    <div class="countdown-label">⚡ Acesso expira em</div>
+    <div class="countdown-timer">
+      <div class="cd-unit"><span class="cd-num" id="cd-h">23</span><div class="cd-label">horas</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cd-m">59</span><div class="cd-label">min</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cd-s">59</span><div class="cd-label">seg</div></div>
+    </div>
+    <div style="font-size:12px;color:var(--gray);text-align:center">Entre agora antes que o link expire.<br><span style="color:var(--pink)">Não perca seu acesso.</span></div>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Seu acesso inclui</div>
+    <h2 class="section-title">O que você acabou<br>de <em>desbloquear</em> 🔥</h2>
+  </div>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap">👑</div>
+      <div class="benefit-body">
+        <div class="benefit-title">Acesso ao Grupo VIP Secreto</div>
+        <div class="benefit-desc">Você foi adicionado ao grupo secreto onde posto tudo que não aparece em lugar nenhum. Só os meus VIPs veem isso.</div>
+      </div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap">🔥</div>
+      <div class="benefit-body">
+        <div class="benefit-title">Conteúdo Atualizado Todo Dia</div>
+        <div class="benefit-desc">Sempre tem coisa nova chegando pra você. O grupo é vivo, ativo e cheio de surpresas diárias.</div>
+      </div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap">💋</div>
+      <div class="benefit-body">
+        <div class="benefit-title">Conteúdos EXCLUSIVOS Desbloqueados</div>
+        <div class="benefit-desc">Todo o material exclusivo foi desbloqueado. Sem censura. Do jeito que você merece ver — sem filtro nenhum.</div>
+      </div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap">🎬</div>
+      <div class="benefit-body">
+        <div class="benefit-title">Acesso ao Material Completo</div>
+        <div class="benefit-desc">Acesso imediato a todo o acervo. Vídeos, fotos e muito mais — tudo liberado agora, na hora.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TELEGRAM CTA -->
+<div class="tg-section">
+  <div class="tg-card reveal">
+    <span class="tg-icon">💬</span>
+    <h2 class="tg-title">Seu grupo <span>já está te esperando</span></h2>
+    <p class="tg-sub">Clique no botão abaixo e entre agora. O link é exclusivo, só pra você. Não compartilha com ninguém — isso aqui é nosso. 🖤</p>
+    <a href="https://t.me/+KUVr6Oj5OqpiNTQx" target="_blank" class="btn-tg" onclick="fireConfetti()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.01 9.47c-.148.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.75z"/></svg>
+      Entrar no Grupo VIP Agora
+    </a>
+    <div class="btn-tg-sub">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+      Link seguro · Acesso imediato · Apenas para você
+    </div>
+  </div>
+</div>
+
+<!-- SECURITY -->
+<section class="security-section">
+  <div class="security-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">✦ Proteção total</div>
+      <h2 class="section-title">Compra 100% <em>Segura</em> 🔒</h2>
+    </div>
+
+    <div class="security-grid reveal">
+      <div class="security-card">
+        <div class="security-card-icon">✅</div>
+        <div class="security-card-title">Pagamento Aprovado</div>
+        <div class="security-card-desc">Sua transação foi processada com sucesso e segurança</div>
+      </div>
+      <div class="security-card">
+        <div class="security-card-icon">🔐</div>
+        <div class="security-card-title">SSL 256-bit</div>
+        <div class="security-card-desc">Criptografia de nível bancário em todas as transações</div>
+      </div>
+      <div class="security-card">
+        <div class="security-card-icon">👁️‍🗨️</div>
+        <div class="security-card-title">Extrato Discreto</div>
+        <div class="security-card-desc">Aparece de forma genérica. Ninguém sabe o que é</div>
+      </div>
+      <div class="security-card">
+        <div class="security-card-icon">⚡</div>
+        <div class="security-card-title">Acesso Imediato</div>
+        <div class="security-card-desc">Liberação automática logo após a confirmação</div>
+      </div>
+    </div>
+
+    <div class="payment-row reveal">
+      <div class="payment-row-title">Formas de pagamento aceitas</div>
+      <div class="payment-logos">
+        <img src="cards.png" alt="Cartões aceitos" style="height:44px;filter:none;opacity:1;max-width:100%"
+             onerror="this.style.display='none';document.getElementById('cards-text').style.display='flex'"/>
+        <div id="cards-text" style="display:none;gap:10px;flex-wrap:wrap;justify-content:center;font-size:12px;color:var(--gray2)">
+          <span style="background:#1A1FFF;padding:4px 12px;border-radius:4px;color:white;font-weight:700">VISA</span>
+          <span style="background:#EB001B;padding:4px 12px;border-radius:4px;color:white;font-weight:700">MASTERCARD</span>
+          <span style="background:#00A3E0;padding:4px 12px;border-radius:4px;color:white;font-weight:700">ELO</span>
+          <span style="background:#32D74B;padding:4px 12px;border-radius:4px;color:black;font-weight:700">PIX</span>
+          <span style="background:#2E77BC;padding:4px 12px;border-radius:4px;color:white;font-weight:700">AMEX</span>
+          <span style="background:#C41230;padding:4px 12px;border-radius:4px;color:white;font-weight:700">HIPERCARD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="verified-row reveal">
+      <div class="verified-badge of">
+        <div class="verified-check">✓</div>
+        Verificada no OnlyFans
+      </div>
+      <div class="verified-badge priv">
+        <div class="verified-check" style="background:var(--orange)">✓</div>
+        Verificada no Privacy
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGILO -->
+<section class="sigilo-section">
+  <div class="sigilo-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">✦ Confidencial</div>
+      <h2 class="section-title">Sigilo Total <em>com você</em> 🤫</h2>
+    </div>
+
+    <div class="sigilo-promise reveal">
+      <div class="sigilo-promise-icon">🤝</div>
+      <div class="sigilo-promise-title">Minha Promessa de Privacidade</div>
+      <p class="sigilo-promise-text">
+        Sua privacidade é sagrada pra mim. Nada do que acontece aqui sai daqui.<br>
+        Seu nome, seus dados, sua assinatura — tudo protegido. Isso é entre você e eu.<br>
+        Só nós dois sabemos. 🖤
+      </p>
+      <div class="sigilo-promise-sign">— Ingrid</div>
+    </div>
+
+    <div class="sigilo-grid">
+      <div class="sigilo-card reveal">
+        <div class="sigilo-icon">🕵️</div>
+        <div>
+          <div class="sigilo-title">Zero Exposição</div>
+          <div class="sigilo-desc">Seu nome NUNCA aparece em lugar público. Acesso 100% anônimo e privado.</div>
+        </div>
+      </div>
+      <div class="sigilo-card reveal">
+        <div class="sigilo-icon">💳</div>
+        <div>
+          <div class="sigilo-title">Extrato Discreto</div>
+          <div class="sigilo-desc">A cobrança aparece de forma genérica. Ninguém vai saber do que se trata.</div>
+        </div>
+      </div>
+      <div class="sigilo-card reveal">
+        <div class="sigilo-icon">🔐</div>
+        <div>
+          <div class="sigilo-title">Dados Criptografados</div>
+          <div class="sigilo-desc">Suas informações protegidas com criptografia de nível bancário, igual seu banco.</div>
+        </div>
+      </div>
+      <div class="sigilo-card reveal">
+        <div class="sigilo-icon">🚫</div>
+        <div>
+          <div class="sigilo-title">Sem Spam, Sem Vazamento</div>
+          <div class="sigilo-desc">Seu contato NUNCA é vendido ou repassado. Você recebe só o que pediu.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <span>Ingrid VIP</span> · Conteúdo adulto +18 · Todos os direitos reservados</p>
+  <p style="margin-top:6px">Acesso exclusivo · Confidencial · Não compartilhe este link</p>
+</footer>
+
+</div><!-- /main -->
+
+<script>
+// ── CURSOR ──────────────────────────────────────────────────
+const cur = document.getElementById('cursor')
+const ring = document.getElementById('cursor-ring')
+let mx=0,my=0,rx=0,ry=0
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'})
+;(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})()
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';ring.style.opacity='0.8'})
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.opacity='0.5'})
+})
+
+// ── PARTICLES ───────────────────────────────────────────────
+const canvas = document.getElementById('particles')
+const ctx = canvas.getContext('2d')
+let particles = []
+function resizeCanvas(){canvas.width=innerWidth;canvas.height=innerHeight}
+resizeCanvas();window.addEventListener('resize',resizeCanvas)
+function createParticles(){
+  particles=[]
+  for(let i=0;i<60;i++){
+    particles.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height,
+      r:Math.random()*1.5+.3,
+      speed:Math.random()*.4+.1,
+      opacity:Math.random()*.5+.1,
+      hue:Math.random()>0.7?'255,107,184':'255,27,141',
+      drift:(Math.random()-.5)*.3
+    })
+  }
+}
+createParticles()
+function animParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height)
+  particles.forEach(p=>{
+    p.y-=p.speed;p.x+=p.drift
+    if(p.y<-5){p.y=canvas.height+5;p.x=Math.random()*canvas.width}
+    if(p.x<-5)p.x=canvas.width+5
+    if(p.x>canvas.width+5)p.x=-5
+    ctx.beginPath()
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+    ctx.fillStyle=`rgba(${p.hue},${p.opacity})`
+    ctx.fill()
+  })
+  requestAnimationFrame(animParticles)
+}
+animParticles()
+
+// ── INTRO SPLASH ─────────────────────────────────────────────
+window.addEventListener('load',()=>{
+  const bar = document.getElementById('intro-bar')
+  const intro = document.getElementById('intro')
+  const main = document.getElementById('main')
+  setTimeout(()=>{bar.style.width='100%'},100)
+  setTimeout(()=>{
+    intro.classList.add('hide')
+    main.style.opacity='1'
+    triggerReveal()
+  },2600)
+})
+
+// ── TYPING EFFECT ────────────────────────────────────────────
+const messages = [
+  "Oi, bb... tô te esperando no grupo 🔥",
+  "Acabei de postar coisa nova lá... 💋",
+  "Só você tem esse acesso... 🤫🖤",
+  "Entra logo, saudade de você... 😈"
+]
+let msgIdx=0,charIdx=0,typing=true,waitTimer=0
+const typedEl = document.getElementById('typed-msg')
+function typeLoop(){
+  if(waitTimer>0){waitTimer--;setTimeout(typeLoop,50);return}
+  const msg = messages[msgIdx]
+  if(typing){
+    typedEl.textContent=msg.slice(0,++charIdx)
+    if(charIdx>=msg.length){typing=false;waitTimer=60}
+    setTimeout(typeLoop,55)
+  } else {
+    typedEl.textContent=msg.slice(0,--charIdx)
+    if(charIdx<=0){typing=true;msgIdx=(msgIdx+1)%messages.length;waitTimer=10}
+    setTimeout(typeLoop,25)
+  }
+}
+setTimeout(typeLoop,3000)
+
+// ── MEMBER COUNT FLUCTUATION ──────────────────────────────────
+let members=247
+setInterval(()=>{
+  const delta=Math.floor(Math.random()*3)-1
+  members=Math.max(230,Math.min(280,members+delta))
+  document.getElementById('member-count').textContent=members
+},4000)
+
+// ── COUNTDOWN ────────────────────────────────────────────────
+let total = 23*3600+59*60+59
+function updateCD(){
+  total--
+  if(total<0)total=23*3600+59*59
+  const h=Math.floor(total/3600)
+  const m=Math.floor((total%3600)/60)
+  const s=total%60
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0')
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0')
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0')
+}
+setInterval(updateCD,1000)
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────
+function triggerReveal(){
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        const el=e.target
+        const delay=el.dataset.delay||0
+        setTimeout(()=>el.classList.add('visible'),delay)
+        io.unobserve(el)
+      }
+    })
+  },{threshold:.15})
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.dataset.delay=i*80;io.observe(el)})
+  document.querySelectorAll('.benefit-card').forEach((el,i)=>{
+    const io2=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){setTimeout(()=>el.classList.add('visible'),i*120);io2.unobserve(el)}})
+    },{threshold:.1})
+    io2.observe(el)
+  })
+}
+
+// ── CONFETTI ─────────────────────────────────────────────────
+const cCanvas = document.getElementById('confetti-canvas')
+const cCtx = cCanvas.getContext('2d')
+cCanvas.width=innerWidth;cCanvas.height=innerHeight
+window.addEventListener('resize',()=>{cCanvas.width=innerWidth;cCanvas.height=innerHeight})
+let confettiPieces=[]
+function fireConfetti(){
+  for(let i=0;i<120;i++){
+    confettiPieces.push({
+      x:innerWidth/2,y:innerHeight*0.6,
+      vx:(Math.random()-0.5)*18,
+      vy:Math.random()*-18-5,
+      r:Math.random()*6+3,
+      color:['#FF1B8D','#ff5cb8','#ffffff','#FFD700','#ff0066'][Math.floor(Math.random()*5)],
+      rot:Math.random()*360,
+      rotSpeed:(Math.random()-0.5)*8,
+      life:1,decay:Math.random()*.012+.008,
+      shape:Math.random()>.5?'circle':'rect'
+    })
+  }
+  animConfetti()
+}
+let confettiRunning=false
+function animConfetti(){
+  if(confettiRunning)return;confettiRunning=true
+  ;(function loop(){
+    cCtx.clearRect(0,0,cCanvas.width,cCanvas.height)
+    confettiPieces=confettiPieces.filter(p=>p.life>0)
+    confettiPieces.forEach(p=>{
+      p.x+=p.vx;p.vy+=0.4;p.y+=p.vy
+      p.rot+=p.rotSpeed;p.life-=p.decay
+      cCtx.save();cCtx.globalAlpha=Math.max(0,p.life)
+      cCtx.fillStyle=p.color
+      cCtx.translate(p.x,p.y);cCtx.rotate(p.rot*Math.PI/180)
+      if(p.shape==='circle'){cCtx.beginPath();cCtx.arc(0,0,p.r,0,Math.PI*2);cCtx.fill()}
+      else{cCtx.fillRect(-p.r,-p.r/2,p.r*2,p.r)}
+      cCtx.restore()
+    })
+    if(confettiPieces.length>0)requestAnimationFrame(loop)
+    else confettiRunning=false
+  })()
+}
+</script>
+</body>
+</html>
